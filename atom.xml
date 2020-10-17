@@ -6,7 +6,7 @@
   <link href="https://gitee.com/mufengzzz/mufengzzz/atom.xml" rel="self"/>
   
   <link href="https://gitee.com/mufengzzz/mufengzzz/"/>
-  <updated>2020-09-24T03:20:03.115Z</updated>
+  <updated>2020-10-17T06:13:22.505Z</updated>
   <id>https://gitee.com/mufengzzz/mufengzzz/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>CentOS开放端口</title>
+    <link href="https://gitee.com/mufengzzz/mufengzzz/2020/10/17/CentOS%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3/index/"/>
+    <id>https://gitee.com/mufengzzz/mufengzzz/2020/10/17/CentOS%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3/index/</id>
+    <published>2020-10-17T06:02:46.000Z</published>
+    <updated>2020-10-17T06:13:22.505Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;本地服务器（基于VMware-CentOS-7）部署常用软件时遇到的问题&quot;&gt;&lt;a href=&quot;#本地服务器（基于VMware-CentOS-7）部署常用软件时遇到的问题&quot; class=&quot;headerlink&quot; title=&quot;本地服务器（基于VMware +</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>SpringMVC过滤器中文乱码</title>
@@ -29,27 +50,6 @@
         
         
     <summary type="html">&lt;h1 id=&quot;今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题&quot;&gt;&lt;a href=&quot;#今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="https://gitee.com/mufengzzz/mufengzzz/2020/09/22/hello-world/"/>
-    <id>https://gitee.com/mufengzzz/mufengzzz/2020/09/22/hello-world/</id>
-    <published>2020-09-21T16:59:35.818Z</published>
-    <updated>2020-09-21T16:59:35.818Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt;</summary>
         
       
     
