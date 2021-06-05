@@ -6,7 +6,7 @@
   <link href="https://gitee.com/mufengzzz/mufengzzz/atom.xml" rel="self"/>
   
   <link href="https://gitee.com/mufengzzz/mufengzzz/"/>
-  <updated>2021-06-05T10:59:31.031Z</updated>
+  <updated>2021-06-05T11:25:35.725Z</updated>
   <id>https://gitee.com/mufengzzz/mufengzzz/</id>
   
   <author>
@@ -17,18 +17,18 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>GC算法</title>
-    <link href="https://gitee.com/mufengzzz/mufengzzz/2021/06/05/GC%E7%AE%97%E6%B3%95/"/>
-    <id>https://gitee.com/mufengzzz/mufengzzz/2021/06/05/GC%E7%AE%97%E6%B3%95/</id>
-    <published>2021-06-05T10:57:51.000Z</published>
-    <updated>2021-06-05T10:59:31.031Z</updated>
+    <title>JVM笔记</title>
+    <link href="https://gitee.com/mufengzzz/mufengzzz/2021/06/05/JVM%E7%AC%94%E8%AE%B0/"/>
+    <id>https://gitee.com/mufengzzz/mufengzzz/2021/06/05/JVM%E7%AC%94%E8%AE%B0/</id>
+    <published>2021-06-05T11:24:51.000Z</published>
+    <updated>2021-06-05T11:25:35.725Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;h1 id=&quot;JVM的几种GC算法&quot;&gt;&lt;a href=&quot;#JVM的几种GC算法&quot; class=&quot;headerlink&quot; title=&quot;JVM的几种GC算法&quot;&gt;&lt;/a&gt;JVM的几种GC算法&lt;/h1&gt;&lt;h3 id=&quot;1-标记-清除算法&quot;&gt;&lt;a href=&quot;#1-标记-清除算法&quot;</summary>
+    <summary type="html">&lt;h1 id=&quot;JVM虚拟机&quot;&gt;&lt;a href=&quot;#JVM虚拟机&quot; class=&quot;headerlink&quot; title=&quot;JVM虚拟机&quot;&gt;&lt;/a&gt;JVM虚拟机&lt;/h1&gt;&lt;h2 id=&quot;1-JVM的位置&quot;&gt;&lt;a href=&quot;#1-JVM的位置&quot; class=&quot;headerlink&quot;</summary>
         
       
     
@@ -40,18 +40,18 @@
   </entry>
   
   <entry>
-    <title>JVM笔记</title>
-    <link href="https://gitee.com/mufengzzz/mufengzzz/2021/06/05/JVM%E7%AC%94%E8%AE%B0/"/>
-    <id>https://gitee.com/mufengzzz/mufengzzz/2021/06/05/JVM%E7%AC%94%E8%AE%B0/</id>
-    <published>2021-06-05T10:56:52.000Z</published>
-    <updated>2021-06-05T10:59:37.373Z</updated>
+    <title>GC算法</title>
+    <link href="https://gitee.com/mufengzzz/mufengzzz/2021/06/05/GC%E7%AE%97%E6%B3%95/"/>
+    <id>https://gitee.com/mufengzzz/mufengzzz/2021/06/05/GC%E7%AE%97%E6%B3%95/</id>
+    <published>2021-06-05T11:24:44.000Z</published>
+    <updated>2021-06-05T11:25:11.697Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;h1 id=&quot;JVM虚拟机&quot;&gt;&lt;a href=&quot;#JVM虚拟机&quot; class=&quot;headerlink&quot;</summary>
+    <summary type="html">&lt;h1 id=&quot;JVM的几种GC算法&quot;&gt;&lt;a href=&quot;#JVM的几种GC算法&quot; class=&quot;headerlink&quot; title=&quot;JVM的几种GC算法&quot;&gt;&lt;/a&gt;JVM的几种GC算法&lt;/h1&gt;&lt;h3 id=&quot;1-标记-清除算法&quot;&gt;&lt;a href=&quot;#1-标记-清除算法&quot;</summary>
         
       
     

@@ -66,7 +66,7 @@
      
     <div class="article-meta">
       <a href="/2021/06/05/GC%E7%AE%97%E6%B3%95/" class="article-date">
-  <time datetime="2021-06-05T10:57:51.000Z" itemprop="datePublished">2021-06-05</time>
+  <time datetime="2021-06-05T11:24:44.000Z" itemprop="datePublished">2021-06-05</time>
 </a>   
 <div class="word_count">
     <span class="post-time">
@@ -103,7 +103,7 @@
 <li>执行效率不稳定。场景：堆中包含大量对象，且大部分需要回收，此时要进行大量的标记以及清除动作。</li>
 <li>空间碎片化的问题。在执行完成GC以后，会产生大量的不连续的内存碎片。此时如果需要为程序分配较大的对象的时候则无法分配足够的连续内存，则需要再次进行GC。</li>
 </ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/21635093/1622203815534-8ba0673f-3392-432d-b931-4502aa9a56f9.png" alt="image-20210516112933243.png"></p>
+<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203815534-8ba0673f-3392-432d-b931-4502aa9a56f9.png"></p>
 <h3 id="2-标记-复制算法"><a href="#2-标记-复制算法" class="headerlink" title="2.标记-复制算法"></a>2.标记-复制算法</h3><p>简称为复制算法，是为了解决标记-清除算法在面对大量可回收对象时执行效率低的问题而开发的。</p>
 <p>它将可用内存按照容量划分为相等的两块，每次只使用其中的一块。当使用的一块空间耗尽时，就将存货的对象复制到另一半内存上。然后再把该内存区域一次清理掉。如果内存中有大量存活的对象，该算法将产生大量的内存复制开销，但如果内存中多数对象都是可回收情况，算法只需要复制很少的存活对象。每次回收仅针对整个半区进行回收，分配内存时也无需考虑内存碎片的问题，只需要移动堆顶指针，按顺序分配即可。</p>
 <p>优点：</p>
@@ -114,13 +114,13 @@
 <ul>
 <li>该算法的可用内存只有原来的一半</li>
 </ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/21635093/1622203833940-c0d43376-c5f5-4d6e-a78f-b9d7ef6c0424.png" alt="image-20210516115816400.png"></p>
+<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203833940-c0d43376-c5f5-4d6e-a78f-b9d7ef6c0424.png"></p>
 <p>现在的商用Java虚拟机大多都优先采用了这种收集算法去回收新生代。</p>
 <h3 id="3-标记-整理算法"><a href="#3-标记-整理算法" class="headerlink" title="3.标记-整理算法"></a>3.标记-整理算法</h3><p>为了解决标记-复制算法的一些问题，例如对象存活率较高的时候，要进行大量的复制操作，这会导致效率降低。更关键的是，如果不希望浪费一半的内存空间，就需要有额外的空间进行分配担保，以应对被使用的内存中所有对象都存活的极端情况。所以在老年代中一般不能直接选用这种算法。</p>
 <p>针对老年代的对象存亡特征，出现了“标记-整理”（Mark-Compact）算法。</p>
 <p>标记过程和标记清除算法完全一致。</p>
 <p>后续步骤则为，让所有存活的对象都向内存空间的一端移动，然后直接清理掉边界以外的内存。</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/21635093/1622203853119-7ab77407-8ca0-459a-9cae-1cd158d02a1e.png" alt="image-20210516122959483.png"></p>
+<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203853119-7ab77407-8ca0-459a-9cae-1cd158d02a1e.png"></p>
 <p>优点：</p>
 <ul>
 <li>可以彻底消灭内存碎片</li>
@@ -165,7 +165,7 @@
 
 <p>如果是引用计数算法，objA和objB均无法被回收，因为他们的引用技术器的值为1。</p>
 <h3 id="2-可达性分析算法"><a href="#2-可达性分析算法" class="headerlink" title="2.可达性分析算法"></a>2.可达性分析算法</h3><p>基本思想：通过一系列称为GC Roots的根对象作为起始节点集，从这些节点开始，根据引用关系向下搜索。搜索过程所走过的路径称为“引用链”（Reference Chain），如果某个对象到GC Roots间没有任何引用链相连， 或者用图论的话来说就是从GC Roots到这个对象不可达时，则证明此对象是不可能再被使用的。</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/21635093/1622203875588-0b4cd925-84a4-41e3-bc83-dd4c09cbeca7.png" alt="image-20210516172618661.png"></p>
+<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203875588-0b4cd925-84a4-41e3-bc83-dd4c09cbeca7.png"></p>
 <p>上图中，虽然object5和object6以及object7有关联，但是它们无法到达GC Roots，所以他们会被判定为可回收的对象。</p>
 <p>固定可作为GC Roots的对象包括以下几种：</p>
 <ul>
@@ -260,10 +260,19 @@
    
   <nav class="article-nav">
     
-    
       <a href="/2021/06/05/JVM%E7%AC%94%E8%AE%B0/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            JVM笔记
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/10/17/CentOS%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3/index/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">JVM笔记</div>
+        <div class="article-nav-title">CentOS开放端口</div>
       </a>
     
   </nav>

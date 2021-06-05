@@ -66,14 +66,14 @@
      
     <div class="article-meta">
       <a href="/2021/06/05/JVM%E7%AC%94%E8%AE%B0/" class="article-date">
-  <time datetime="2021-06-05T10:56:52.000Z" itemprop="datePublished">2021-06-05</time>
+  <time datetime="2021-06-05T11:24:51.000Z" itemprop="datePublished">2021-06-05</time>
 </a>   
 <div class="word_count">
     <span class="post-time">
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">4.5k</span>
+            <span class="post-count">4.4k</span>
         </span>
     </span>
 
@@ -97,21 +97,13 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="JVM虚拟机"><a href="#JVM虚拟机" class="headerlink" title="JVM虚拟机"></a>JVM虚拟机</h1><ul>
-<li>请你谈谈你对JVM的理解？java8虚拟机和之前的变化更新？</li>
-<li>什么是OOM，什么是栈溢出StackOverFlowError？怎么分析？</li>
-<li>JVM的常用调优参数有哪些？</li>
-<li>内存快照如何抓取？怎么分析Dump文件？</li>
-<li>谈谈JVM中，类加载你的认识？</li>
-</ul>
-<h2 id="1-JVM的位置"><a href="#1-JVM的位置" class="headerlink" title="1.JVM的位置"></a>1.JVM的位置</h2><p><img src="https://cdn.nlark.com/yuque/0/2021/png/21635093/1622202561470-543e4aba-a6ab-4314-a630-974d89ec02b7.png" alt="image-20210517173605553.png"></p>
-<h2 id="2-JVM的体系结构"><a href="#2-JVM的体系结构" class="headerlink" title="2.JVM的体系结构"></a>2.JVM的体系结构</h2><p><img src="https://cdn.nlark.com/yuque/0/2021/png/21635093/1622202631694-15ee6faf-9453-4749-a3e2-86ce59cf15ff.png" alt="image-20210517173943316.png"></p>
+  <h1 id="JVM虚拟机"><a href="#JVM虚拟机" class="headerlink" title="JVM虚拟机"></a>JVM虚拟机</h1><h2 id="1-JVM的位置"><a href="#1-JVM的位置" class="headerlink" title="1.JVM的位置"></a>1.JVM的位置</h2><p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622202561470-543e4aba-a6ab-4314-a630-974d89ec02b7.png"></p>
+<h2 id="2-JVM的体系结构"><a href="#2-JVM的体系结构" class="headerlink" title="2.JVM的体系结构"></a>2.JVM的体系结构</h2><p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622202631694-15ee6faf-9453-4749-a3e2-86ce59cf15ff.png"></p>
 <p>上图中，Java栈，本地方法栈，程序计数器，均不会有垃圾回收</p>
 <p>JVM架构图</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/21635093/1622202813963-84edfb0b-8822-4e4a-9315-ff3138aa8876.png" alt="image-20210517194751879.png"></p>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/21635093/1622202890205-df5393a9-e386-402f-b8ce-328f4a0a89ed.png" alt="image-20210517194818518.png"></p>
+<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/image-20210605192109376.png"></p>
 <h2 id="3-类加载器"><a href="#3-类加载器" class="headerlink" title="3.类加载器"></a>3.类加载器</h2><p>​    作用：加载Class文件</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/21635093/1622202950142-d4c8d89c-a552-47be-be4c-2f641157d2fe.png" alt="image-20210517195548001.png"></p>
+<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622202950142-d4c8d89c-a552-47be-be4c-2f641157d2fe.png"></p>
 <p>JVM中提供了三层的ClassLoader：</p>
 <ul>
 <li>Bootstrap classLoader:主要负责加载核心的类库(java.lang.*等)，构造ExtClassLoader和APPClassLoader。</li>
@@ -120,7 +112,7 @@
 </ul>
 <h2 id="4-双亲委派机制"><a href="#4-双亲委派机制" class="headerlink" title="4.双亲委派机制"></a>4.双亲委派机制</h2><p>​    为了保证安全。</p>
 <p>​    APP–&gt;EXT（扩展）–&gt;Bootstrap(最终执行) 会一直向上找，如果高层找不到在由最高层向下找。</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/21635093/1622203082627-55e834a9-03cb-40d6-b31b-9135229e0e42.png" alt="image-20210517201910952.png"></p>
+<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203082627-55e834a9-03cb-40d6-b31b-9135229e0e42.png"></p>
 <p>流程：</p>
 <ol>
 <li>类加载器收到类加载的请求</li>
@@ -131,13 +123,13 @@
 <h2 id="5-沙箱安全机制"><a href="#5-沙箱安全机制" class="headerlink" title="5.沙箱安全机制"></a>5.沙箱安全机制</h2><p>Java安全模型的核心就是Java沙箱(sandbσx),什么是沙箱?沙箱是一个限制程序运行的环境。沙箱机制就是将Java代码限定在虛拟杋(Jνm特定的运行范围中,并且严格限制代码对本地系统资源访问,通过这样的措施来保证对代码的有效隔离,防止对本地系统造成破坏。沙箱主要限制系统资源访问,那系统资源包括什么?CP∪、内存、文件系统、网络。不同级别的沙箱对这些资源访问的限制也可以不一样。</p>
 <p>所有的Java程序运行都可以指定沙箱,可以定制安全策略。</p>
 <p>Java中将执行程序分成本地代码和远程代码两种,本地代码默认视为可信仼的,而远程代码则被看作是不受信的。对于授信的本地代码,可以访问一切本地资源。而对于非授信的远程代码在早期的ava实现中,安全依赖于沙箱( Sandbox)机制。如下图所示JDK1.0安全模型。</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/21635093/1622203112851-63b53b6b-a57e-4a37-aae4-336e56024648.png" alt="image-20210518131537561.png"></p>
+<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203112851-63b53b6b-a57e-4a37-aae4-336e56024648.png"></p>
 <p>但如此严格的安全机制也给程序的功能扩展带来障碍，比如当用户希望远程代码访问本地系统的文件时候，就无法实现。因此在后续的Java 1.1版本中， 针对安全机制做了改进， 增加了安全策略， 允许用户指定代码对本地资源的访问权限。如下图所示JDK 1.1安全模型。</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/21635093/1622203127799-4adc8743-a108-4429-8622-a4e66cf7184e.png" alt="image-20210518131746468.png"></p>
+<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203127799-4adc8743-a108-4429-8622-a4e66cf7184e.png"></p>
 <p>在Java 1.2版本中， 再次改进了安全机制， 增加了代码签名。不论本地代码或是远程代码， 都会按照用户的安全策略设定，由类加载器加载到虚拟机中权限不同的运行空间，来实现差异化的代码执行权限控制。如下图所示JDK 1.2安全模型。</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/21635093/1622203139157-0d3a1cfa-6f23-4c7a-bb8b-1f725cb8a50f.png" alt="image-20210518131835852.png"></p>
+<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203139157-0d3a1cfa-6f23-4c7a-bb8b-1f725cb8a50f.png"></p>
 <p>当前最新的安全机制实现， 则引入了域(Domain) 的概念。虚拟机会把所有代码加载到不同的系统域和应用域，系统域部分专门负责与关键资源进行交互，而各个应用域部分则通过系统域的部分代理来对各种需要的资源进行访问。虚拟机中不同的受保护域(Protected Domain) ， 对应不一样的权限(Permission) 。存在于不同域中的类文件就具有了当前域的全部权限， 如下图所示最新的安全模型(jdk 1.6)。</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/21635093/1622203148746-9135d0eb-234b-483e-a9c8-49c5aabaa18a.png" alt="image-20210518131957746.png"></p>
+<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203148746-9135d0eb-234b-483e-a9c8-49c5aabaa18a.png"></p>
 <p>组成沙箱的基本组件：</p>
 <p>·字节码校验器(bytecode verifier) ：确保Java类文件遵循Java语言规范。这样可以帮助Java程序实现内存保护。“但并不是所有的类文件都会经过字节码校验，比如核心类。</p>
 <p>·类装载器(classloader) ：其中类装载器在3个方面对Java沙箱起作用</p>
@@ -196,10 +188,10 @@
 <li>实例方法</li>
 </ul>
 <p>栈运行原理：栈帧</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/21635093/1622203208262-a6fbacc8-9dea-4f0c-8f6c-14c6b85d5885.png" alt="image-20210518140954504.png"></p>
+<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203208262-a6fbacc8-9dea-4f0c-8f6c-14c6b85d5885.png"></p>
 <p>程序正在执行的方法，一定在栈的顶部</p>
 <p>如果栈满:StackOverflowError</p>
-<h3 id="栈-堆-方法区：交互关系"><a href="#栈-堆-方法区：交互关系" class="headerlink" title="栈+堆+方法区：交互关系"></a>栈+堆+方法区：交互关系</h3><p><img src="https://cdn.nlark.com/yuque/0/2021/png/21635093/1622203213663-54e342e4-c6b3-4359-9a2d-8ba949a4dbe7.png" alt="image-20210518141609761.png"></p>
+<h3 id="栈-堆-方法区：交互关系"><a href="#栈-堆-方法区：交互关系" class="headerlink" title="栈+堆+方法区：交互关系"></a>栈+堆+方法区：交互关系</h3><p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203213663-54e342e4-c6b3-4359-9a2d-8ba949a4dbe7.png"></p>
 <p>Q1:画出一个对象实例化的过程在内存中？</p>
 <p>Q2:栈具体怎么存？</p>
 <h2 id="10-三种JVM"><a href="#10-三种JVM" class="headerlink" title="10.三种JVM"></a>10.三种JVM</h2><ul>
@@ -238,7 +230,7 @@
 
 
 <p>JDK8后，永久存储区改名为——元空间，有区别！</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/21635093/1622203223214-67805636-9d97-42ff-9aa4-b296fc5c2b1a.png" alt="image-20210520161554171.png"></p>
+<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203223214-67805636-9d97-42ff-9aa4-b296fc5c2b1a.png"></p>
 <h2 id="12-新生区"><a href="#12-新生区" class="headerlink" title="12.新生区"></a>12.新生区</h2><ul>
 <li>类：诞生和成长的地方，甚至死亡；</li>
 <li>伊甸园区:所有的对象都在此区域new出来。</li>
@@ -270,7 +262,7 @@
 <li>JDK1.7    : 永久代，但是慢慢的退化了，<code>去永久代</code> ，常量池在堆中</li>
 <li>JDK1.8    : 无永久代，常量池在元空间  – 元空间出现在JDK1.8</li>
 </ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/21635093/1622203241157-d40f70e9-976f-4969-a094-c4eb514f781d.png" alt="image-20210520163059649.png"></p>
+<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203241157-d40f70e9-976f-4969-a094-c4eb514f781d.png"></p>
 <p>元空间：逻辑上存在，物理上不存在</p>
 <p>原因：新生代+老年代 = total mem</p>
 <h2 id="15-堆内存调优"><a href="#15-堆内存调优" class="headerlink" title="15.堆内存调优"></a>15.堆内存调优</h2><p>默认情况下，分配的总内存时电脑内存的1/4,初始化的内存是1/64</p>
@@ -288,7 +280,7 @@
 
 
 
-<h2 id="16-GC-垃圾回收"><a href="#16-GC-垃圾回收" class="headerlink" title="16.GC:垃圾回收"></a>16.GC:垃圾回收</h2><p><img src="https://cdn.nlark.com/yuque/0/2021/png/21635093/1622203250047-59afdacb-eb8a-4a9a-8786-43889bcedb25.png" alt="image-20210520201604632.png"></p>
+<h2 id="16-GC-垃圾回收"><a href="#16-GC-垃圾回收" class="headerlink" title="16.GC:垃圾回收"></a>16.GC:垃圾回收</h2><p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203250047-59afdacb-eb8a-4a9a-8786-43889bcedb25.png"></p>
 <ul>
 <li>新生代</li>
 <li>幸存区(from/to)</li>
@@ -313,7 +305,7 @@
 <h2 id="17-JMM（Java-Memory-Model）"><a href="#17-JMM（Java-Memory-Model）" class="headerlink" title="17.JMM（Java Memory Model）"></a>17.JMM（Java Memory Model）</h2><p>JMM:允许编译器和缓存以数据在处理器特定的缓存（或寄存器）和主存之间移动的次序拥有重要的特权，除非代码中使用了volatile或synchronized明确请求了某些可见性的保证。</p>
 <p>作用：缓存一致性协议，用于定义数据读写的规则</p>
 <p>JMM定义了线程工作内存和主内存之间的抽象关系：线程之间的共享变量存储在主内存中，每个线程都有一个私有的本地内存</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/21635093/1622203258666-7466975c-50ea-43f9-9f8e-269e9dcf037f.png" alt="image-20210523180402524.png"></p>
+<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203258666-7466975c-50ea-43f9-9f8e-269e9dcf037f.png"></p>
 <p>解决共享对象可见性：volilate,synchronized</p>
 <p>2.关于JMM的一些同步的约定：</p>
 <p>1、线程解锁前，必须把共享变量立刻刷回主存。</p>
@@ -436,19 +428,10 @@
    
   <nav class="article-nav">
     
+    
       <a href="/2021/06/05/GC%E7%AE%97%E6%B3%95/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            GC算法
-          
-        </div>
-      </a>
-    
-    
-      <a href="/2020/10/17/CentOS%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3/index/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">CentOS开放端口</div>
+        <div class="article-nav-title">GC算法</div>
       </a>
     
   </nav>
