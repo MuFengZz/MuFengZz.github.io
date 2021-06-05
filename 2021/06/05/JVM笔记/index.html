@@ -1,133 +1,103 @@
-<?xml version="1.0" encoding="utf-8"?>
-<search>
-  <entry>
-    <title>GC算法</title>
-    <url>/2021/06/05/GC%E7%AE%97%E6%B3%95/</url>
-    <content><![CDATA[<h1 id="JVM的几种GC算法"><a href="#JVM的几种GC算法" class="headerlink" title="JVM的几种GC算法"></a>JVM的几种GC算法</h1><h3 id="1-标记-清除算法"><a href="#1-标记-清除算法" class="headerlink" title="1.标记-清除算法"></a>1.标记-清除算法</h3><p>首先标记处所有需要回收的对象，在标记完成后，统一回收掉所有被标记的对象。当然，也可以反过来，只标记存活的对象，统一回收未标记的对象。</p>
-<p>缺点：</p>
-<ul>
-<li>执行效率不稳定。场景：堆中包含大量对象，且大部分需要回收，此时要进行大量的标记以及清除动作。</li>
-<li>空间碎片化的问题。在执行完成GC以后，会产生大量的不连续的内存碎片。此时如果需要为程序分配较大的对象的时候则无法分配足够的连续内存，则需要再次进行GC。</li>
-</ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/21635093/1622203815534-8ba0673f-3392-432d-b931-4502aa9a56f9.png" alt="image-20210516112933243.png"></p>
-<h3 id="2-标记-复制算法"><a href="#2-标记-复制算法" class="headerlink" title="2.标记-复制算法"></a>2.标记-复制算法</h3><p>简称为复制算法，是为了解决标记-清除算法在面对大量可回收对象时执行效率低的问题而开发的。</p>
-<p>它将可用内存按照容量划分为相等的两块，每次只使用其中的一块。当使用的一块空间耗尽时，就将存货的对象复制到另一半内存上。然后再把该内存区域一次清理掉。如果内存中有大量存活的对象，该算法将产生大量的内存复制开销，但如果内存中多数对象都是可回收情况，算法只需要复制很少的存活对象。每次回收仅针对整个半区进行回收，分配内存时也无需考虑内存碎片的问题，只需要移动堆顶指针，按顺序分配即可。</p>
-<p>优点：</p>
-<ul>
-<li>实现简单，运行效率较高。解决了标记清除算法的内存碎片问题。</li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>该算法的可用内存只有原来的一半</li>
-</ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/21635093/1622203833940-c0d43376-c5f5-4d6e-a78f-b9d7ef6c0424.png" alt="image-20210516115816400.png"></p>
-<p>现在的商用Java虚拟机大多都优先采用了这种收集算法去回收新生代。</p>
-<h3 id="3-标记-整理算法"><a href="#3-标记-整理算法" class="headerlink" title="3.标记-整理算法"></a>3.标记-整理算法</h3><p>为了解决标记-复制算法的一些问题，例如对象存活率较高的时候，要进行大量的复制操作，这会导致效率降低。更关键的是，如果不希望浪费一半的内存空间，就需要有额外的空间进行分配担保，以应对被使用的内存中所有对象都存活的极端情况。所以在老年代中一般不能直接选用这种算法。</p>
-<p>针对老年代的对象存亡特征，出现了“标记-整理”（Mark-Compact）算法。</p>
-<p>标记过程和标记清除算法完全一致。</p>
-<p>后续步骤则为，让所有存活的对象都向内存空间的一端移动，然后直接清理掉边界以外的内存。</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/21635093/1622203853119-7ab77407-8ca0-459a-9cae-1cd158d02a1e.png" alt="image-20210516122959483.png"></p>
-<p>优点：</p>
-<ul>
-<li>可以彻底消灭内存碎片</li>
-<li>内存利用率非常高</li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>如果移动存活对象，尤其是在老年代这种每次回收都有着大量对象存活的区域，移动存活对象并且更新引用的开销是非常大的。而且这种对象移动的操作需要全程暂停用户应用程序才能进行。（标记清除算法也需要停顿用户线程，但停顿时间很短）</li>
-</ul>
-<p>如果标记整理算法不考虑移动和整理存活对象的话，在堆中的存活对象导致的空间碎片化问题只能依靠更复杂的内存分配器以及内存访问器来解决。例如通过“分区空闲分配链表”来解决内存分配问题。</p>
-<h2 id="几种收集器的算法"><a href="#几种收集器的算法" class="headerlink" title="几种收集器的算法"></a>几种收集器的算法</h2><ol>
-<li><p>Serial（串行GC）-复制</p>
-</li>
-<li><p>ParNew（并行GC）-复制</p>
-</li>
-<li><p>Parallel Scavenge（并行回收GC）-复制</p>
-</li>
-<li><p>Serial Old（MSC）（串行GC）-标记-整理</p>
-</li>
-<li><p>CMS（并发GC）-标记-清除</p>
-</li>
-<li><p>Parallel Old（并行GC）–标记-整理</p>
-</li>
-<li><p>G1（JDK1.7update14才可以正式商用）<br>-说明：</p>
-</li>
-<li><ol>
-<li>1~3用于年轻代垃圾回收：年轻代的垃圾回收称为minor GC</li>
-<li>4~6用于年老代垃圾回收（当然也可以用于方法区的回收）：年老代的垃圾回收称为full GC</li>
-<li>G1独立完成”分代垃圾回收”</li>
-<li>并行：多条垃圾回收线程同时操作</li>
-<li>并发：垃圾回收线程与用户线程一起操作</li>
-</ol>
-</li>
-</ol>
-<h2 id="收集器算法实现细节"><a href="#收集器算法实现细节" class="headerlink" title="收集器算法实现细节"></a>收集器算法实现细节</h2><h3 id="1-引用计数算法"><a href="#1-引用计数算法" class="headerlink" title="1.引用计数算法"></a>1.引用计数算法</h3><p>在对象中添加一个引用计数器，每当有一个地方引用它时，计数器的值就+1，当引用失效时，计数器的值就-1。当某一个对象的引用计数器的值为0的时候，则认为这个对象为不会再被使用的。</p>
-<p>特点：原理简单，判定效率高。</p>
-<p>缺点：单纯的引用计数器无法解决对象之间的互相循环引用的问题。</p>
-<p>例如</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class ReferenceCountingGC &#123;</span><br><span class="line">    public Object instance &#x3D; null;</span><br><span class="line">    private static final int _1MB &#x3D; 1024 * 1024;</span><br><span class="line">    &#x2F;**</span><br><span class="line">    * 这个成员属性的唯一意义就是占点内存，以便能在GC日志中看清楚是否有回收过</span><br><span class="line">    *&#x2F;</span><br><span class="line">    private byte[] bigSize &#x3D; new byte[2 * _1MB];</span><br><span class="line">    public static void testGC() &#123;</span><br><span class="line">        ReferenceCountingGC objA &#x3D; new ReferenceCountingGC();</span><br><span class="line">        ReferenceCountingGC objB &#x3D; new ReferenceCountingGC();</span><br><span class="line">        objA.instance &#x3D; objB;</span><br><span class="line">        objB.instance &#x3D; objA;</span><br><span class="line">        objA &#x3D; null;</span><br><span class="line">        objB &#x3D; null;</span><br><span class="line">        &#x2F;&#x2F; 假设在这行发生GC，objA和objB是否能被回收？</span><br><span class="line">        System.gc();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="沐风的博客" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    JVM笔记 |  沐风的博客
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="MuFengZzz's Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-JVM笔记"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  JVM笔记
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/06/05/JVM%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time datetime="2021-06-05T10:56:52.000Z" itemprop="datePublished">2021-06-05</time>
+</a>   
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">4.5k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">16 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
 
 
 
-<p>如果是引用计数算法，objA和objB均无法被回收，因为他们的引用技术器的值为1。</p>
-<h3 id="2-可达性分析算法"><a href="#2-可达性分析算法" class="headerlink" title="2.可达性分析算法"></a>2.可达性分析算法</h3><p>基本思想：通过一系列称为GC Roots的根对象作为起始节点集，从这些节点开始，根据引用关系向下搜索。搜索过程所走过的路径称为“引用链”（Reference Chain），如果某个对象到GC Roots间没有任何引用链相连， 或者用图论的话来说就是从GC Roots到这个对象不可达时，则证明此对象是不可能再被使用的。</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/21635093/1622203875588-0b4cd925-84a4-41e3-bc83-dd4c09cbeca7.png" alt="image-20210516172618661.png"></p>
-<p>上图中，虽然object5和object6以及object7有关联，但是它们无法到达GC Roots，所以他们会被判定为可回收的对象。</p>
-<p>固定可作为GC Roots的对象包括以下几种：</p>
-<ul>
-<li>在虚拟机栈（栈帧中的本地变量表）中引用的对象，譬如各个线程被调用的方法堆栈中使用到的参数、局部变量、临时变量等。</li>
-<li>在方法区中类静态属性引用的对象，譬如Java类的引用类型静态变量。</li>
-<li>在方法区中常量引用的对象，譬如字符串常量池（String Table）里的引用。</li>
-<li>在本地方法栈中JNI（即通常所说的Native方法）引用的对象。</li>
-<li>Java虚拟机内部的引用，如基本数据类型对应的Class对象，一些常驻的异常对象（比如 NullPointExcepiton、OutOfMemoryError）等，还有系统类加载器。</li>
-<li>所有被同步锁（synchronized关键字）持有的对象。</li>
-<li>反映Java虚拟机内部情况的JMXBean、JVMTI中注册的回调、本地代码缓存等。</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>JVM</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SpringMVC过滤器中文乱码</title>
-    <url>/2020/09/24/SpringMVC%E8%BF%87%E6%BB%A4%E5%99%A8%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/</url>
-    <content><![CDATA[<h1 id="今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题"><a href="#今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题" class="headerlink" title="今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题"></a>今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题</h1><h2 id="明明配置好了过滤器但是却没有生效"><a href="#明明配置好了过滤器但是却没有生效" class="headerlink" title="明明配置好了过滤器但是却没有生效"></a>明明配置好了过滤器但是却没有生效</h2><h2 id="过滤器配置如下"><a href="#过滤器配置如下" class="headerlink" title="过滤器配置如下"></a>过滤器配置如下</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--解决中文乱码过滤器--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>encoding<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>utf-8<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>配置了以后问题依旧</p>
-<img src="/2020/09/24/SpringMVC%E8%BF%87%E6%BB%A4%E5%99%A8%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/2020%E5%B9%B49%E6%9C%8824%E6%97%A5104428.png" class="">
-
-
-<p>通过查阅资料，在tomcat目录下的\conf\server.xml文件找到Connector标签</p>
-<p>在后面加入URIEncoding=”UTF-8”</p>
-<p>结果问题依旧</p>
-<hr>
-<p>最后设置了VM options<br>VM options: Dfile.encoding=UTF-8<br>问题解决</p>
-<hr>
-<img src="/2020/09/24/SpringMVC%E8%BF%87%E6%BB%A4%E5%99%A8%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/2020%E5%B9%B49%E6%9C%8824%E6%97%A5104439.png" class="">
-<hr>
-<img src="/2020/09/24/SpringMVC%E8%BF%87%E6%BB%A4%E5%99%A8%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/2020%E5%B9%B49%E6%9C%8824%E6%97%A5104736.png" class="">]]></content>
-  </entry>
-  <entry>
-    <title>CentOS开放端口</title>
-    <url>/2020/10/17/CentOS%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3/index/</url>
-    <content><![CDATA[<h1 id="本地服务器（基于VMware-CentOS-7）部署常用软件时遇到的问题"><a href="#本地服务器（基于VMware-CentOS-7）部署常用软件时遇到的问题" class="headerlink" title="本地服务器（基于VMware + CentOS 7）部署常用软件时遇到的问题"></a>本地服务器（基于VMware + CentOS 7）部署常用软件时遇到的问题</h1><p>看完了CodeSheep的<a href="https://www.bilibili.com/video/BV1bA411b7vs">建议人手一套：个人专属多节点Linux环境打造，Linux操作系统学习实验环境安装配置视频教程</a>，突然也想打造一套多节点的本地服务器。但是前几天安装软件的时候，遇到了如下问题：</p>
-<p>例如：MySQL无法远程连接，redis无法远程访问等等这些问题</p>
-<p>刚开始以为是软件安装的问题，后来经过查阅资料，发现是端口未开放。</p>
-<p>通过以下命令解决</p>
-<p>1、开启防火墙 </p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">systemctl start firewalld</span><br></pre></td></tr></table></figure>
-
-<p>2、开放指定端口(以8080端口为例)</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=8080/tcp --permanent</span><br></pre></td></tr></table></figure>
-
-<p>命令含义：<br>–zone #作用域<br>–add-port=xxxx/tcp  #添加端口，格式为：端口/通讯协议<br>–permanent  #永久生效，没有此参数重启后失效</p>
-<p>3、重启防火墙</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>]]></content>
-  </entry>
-  <entry>
-    <title>JVM笔记</title>
-    <url>/2021/06/05/JVM%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<h1 id="JVM虚拟机"><a href="#JVM虚拟机" class="headerlink" title="JVM虚拟机"></a>JVM虚拟机</h1><ul>
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="JVM虚拟机"><a href="#JVM虚拟机" class="headerlink" title="JVM虚拟机"></a>JVM虚拟机</h1><ul>
 <li>请你谈谈你对JVM的理解？java8虚拟机和之前的变化更新？</li>
 <li>什么是OOM，什么是栈溢出StackOverFlowError？怎么分析？</li>
 <li>JVM的常用调优参数有哪些？</li>
@@ -263,7 +233,7 @@
 </ul>
 </li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GC垃圾回收主要集中在伊甸园区和养老区</span><br><span class="line">假设内存满了，OOM，堆内存不够</span><br><span class="line">    OutOfMemoryError:Java Heap Space</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GC垃圾回收主要集中在伊甸园区和养老区</span><br><span class="line">假设内存满了，OOM，堆内存不够</span><br><span class="line">    OutOfMemoryError:Java Heap Space</span><br></pre></td></tr></table></figure>
 
 
 
@@ -304,7 +274,7 @@
 <p>元空间：逻辑上存在，物理上不存在</p>
 <p>原因：新生代+老年代 = total mem</p>
 <h2 id="15-堆内存调优"><a href="#15-堆内存调优" class="headerlink" title="15.堆内存调优"></a>15.堆内存调优</h2><p>默认情况下，分配的总内存时电脑内存的1/4,初始化的内存是1/64</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-Xms1024m -Xmx1024m -XX:+PrintGCDetails</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Xms1024m -Xmx1024m -XX:+PrintGCDetails</span><br></pre></td></tr></table></figure>
 
 
 
@@ -314,7 +284,7 @@
 <li>如果1还是产生OOM，则分析内存</li>
 </ol>
 <p>一些常用的VM参数：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">堆设置</span><br><span class="line">    -Xms:初始堆大小</span><br><span class="line">    -Xmx:最大堆大小</span><br><span class="line">    -Xmn:新生代大小</span><br><span class="line">    -XX:NewRatio:设置新生代和老年代的比值。如：为3，表示年轻代与老年代比值为1：3</span><br><span class="line">    -XX:SurvivorRatio:新生代中Eden区与两个Survivor区的比值。注意Survivor区有两个。如：为3，表示Eden：Survivor&#x3D;3：2，一个Survivor区占整个新生代的1&#x2F;5  </span><br><span class="line">    -XX:MaxTenuringThreshold:设置转入老年代的存活次数。如果是0，则直接跳过新生代进入老年代</span><br><span class="line">    -XX:PermSize、-XX:MaxPermSize:分别设置永久代最小大小与最大大小（Java8以前）</span><br><span class="line">    -XX:MetaspaceSize、-XX:MaxMetaspaceSize:分别设置元空间最小大小与最大大小（Java8以后）</span><br><span class="line">收集器设置</span><br><span class="line">    -XX:+UseSerialGC:设置串行收集器</span><br><span class="line">    -XX:+UseParallelGC:设置并行收集器</span><br><span class="line">    -XX:+UseParalledlOldGC:设置并行老年代收集器</span><br><span class="line">    -XX:+UseConcMarkSweepGC:设置并发收集器垃圾回收统计信息</span><br><span class="line">    -XX:+PrintGC</span><br><span class="line">    -XX:+PrintGCDetails</span><br><span class="line">    -XX:+PrintGCTimeStamps</span><br><span class="line">    -Xloggc:filename并行收集器设置</span><br><span class="line">    -XX:ParallelGCThreads&#x3D;n:设置并行收集器收集时使用的CPU数。并行收集线程数。</span><br><span class="line">    -XX:MaxGCPauseMillis&#x3D;n:设置并行收集最大暂停时间</span><br><span class="line">    -XX:GCTimeRatio&#x3D;n:设置垃圾回收时间占程序运行时间的百分比。公式为1&#x2F;(1+n) 并发收集器设置</span><br><span class="line">    -XX:+CMSIncrementalMode:设置为增量模式。适用于单CPU情况。</span><br><span class="line">    -XX:ParallelGCThreads&#x3D;n:设置并发收集器新生代收集方式为并行收集时，使用的CPU数。并行收集线程数。</span><br><span class="line">    -XX:+HeapDumpOnOutOfMemoryError 输出OOM Dump文件</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">堆设置</span><br><span class="line">    -Xms:初始堆大小</span><br><span class="line">    -Xmx:最大堆大小</span><br><span class="line">    -Xmn:新生代大小</span><br><span class="line">    -XX:NewRatio:设置新生代和老年代的比值。如：为3，表示年轻代与老年代比值为1：3</span><br><span class="line">    -XX:SurvivorRatio:新生代中Eden区与两个Survivor区的比值。注意Survivor区有两个。如：为3，表示Eden：Survivor&#x3D;3：2，一个Survivor区占整个新生代的1&#x2F;5  </span><br><span class="line">    -XX:MaxTenuringThreshold:设置转入老年代的存活次数。如果是0，则直接跳过新生代进入老年代</span><br><span class="line">    -XX:PermSize、-XX:MaxPermSize:分别设置永久代最小大小与最大大小（Java8以前）</span><br><span class="line">    -XX:MetaspaceSize、-XX:MaxMetaspaceSize:分别设置元空间最小大小与最大大小（Java8以后）</span><br><span class="line">收集器设置</span><br><span class="line">    -XX:+UseSerialGC:设置串行收集器</span><br><span class="line">    -XX:+UseParallelGC:设置并行收集器</span><br><span class="line">    -XX:+UseParalledlOldGC:设置并行老年代收集器</span><br><span class="line">    -XX:+UseConcMarkSweepGC:设置并发收集器垃圾回收统计信息</span><br><span class="line">    -XX:+PrintGC</span><br><span class="line">    -XX:+PrintGCDetails</span><br><span class="line">    -XX:+PrintGCTimeStamps</span><br><span class="line">    -Xloggc:filename并行收集器设置</span><br><span class="line">    -XX:ParallelGCThreads&#x3D;n:设置并行收集器收集时使用的CPU数。并行收集线程数。</span><br><span class="line">    -XX:MaxGCPauseMillis&#x3D;n:设置并行收集最大暂停时间</span><br><span class="line">    -XX:GCTimeRatio&#x3D;n:设置垃圾回收时间占程序运行时间的百分比。公式为1&#x2F;(1+n) 并发收集器设置</span><br><span class="line">    -XX:+CMSIncrementalMode:设置为增量模式。适用于单CPU情况。</span><br><span class="line">    -XX:ParallelGCThreads&#x3D;n:设置并发收集器新生代收集方式为并行收集时，使用的CPU数。并行收集线程数。</span><br><span class="line">    -XX:+HeapDumpOnOutOfMemoryError 输出OOM Dump文件</span><br></pre></td></tr></table></figure>
 
 
 
@@ -383,9 +353,478 @@
 <li>区域大，存活率高</li>
 <li>标记清除（内存碎片不是太多） + 标记压缩（内存碎片过多）</li>
 </ul>
-]]></content>
-      <tags>
-        <tag>JVM</tag>
-      </tags>
-  </entry>
-</search>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://gitee.com/mufengzzz/mufengzzz/2021/06/05/JVM%E7%AC%94%E8%AE%B0/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/" rel="tag">JVM</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2021/06/05/GC%E7%AE%97%E6%B3%95/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            GC算法
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/10/17/CentOS%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3/index/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">CentOS开放端口</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2021
+        <i class="ri-heart-fill heart_icon"></i> MuFengZzz
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        
+        Powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+        <span class="division">|</span>
+        Theme - <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></s>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/tml.png" alt="MuFengZzz&#39;s Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto'
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>
