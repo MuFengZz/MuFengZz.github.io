@@ -6,7 +6,7 @@
   <link href="https://gitee.com/mufengzzz/mufengzzz/atom.xml" rel="self"/>
   
   <link href="https://gitee.com/mufengzzz/mufengzzz/"/>
-  <updated>2021-06-05T11:25:35.725Z</updated>
+  <updated>2021-06-05T11:58:10.584Z</updated>
   <id>https://gitee.com/mufengzzz/mufengzzz/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>RestController&amp;Model无法共同使用问题</title>
+    <link href="https://gitee.com/mufengzzz/mufengzzz/2021/06/05/RestController-Model%E6%97%A0%E6%B3%95%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98/"/>
+    <id>https://gitee.com/mufengzzz/mufengzzz/2021/06/05/RestController-Model%E6%97%A0%E6%B3%95%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98/</id>
+    <published>2021-06-05T11:40:00.000Z</published>
+    <updated>2021-06-05T11:58:10.584Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;RestController-注解-ResponseBody和Model&quot;&gt;&lt;a href=&quot;#RestController-注解-ResponseBody和Model&quot; class=&quot;headerlink&quot; title=&quot;RestController</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Spring" scheme="https://gitee.com/mufengzzz/mufengzzz/tags/Spring/"/>
+    
+  </entry>
   
   <entry>
     <title>JVM笔记</title>
