@@ -89,6 +89,24 @@
       </tags>
   </entry>
   <entry>
+    <title>SpringMVC过滤器中文乱码</title>
+    <url>/2020/09/24/SpringMVC%E8%BF%87%E6%BB%A4%E5%99%A8%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/</url>
+    <content><![CDATA[<h1 id="今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题"><a href="#今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题" class="headerlink" title="今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题"></a>今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题</h1><h2 id="明明配置好了过滤器但是却没有生效"><a href="#明明配置好了过滤器但是却没有生效" class="headerlink" title="明明配置好了过滤器但是却没有生效"></a>明明配置好了过滤器但是却没有生效</h2><h2 id="过滤器配置如下"><a href="#过滤器配置如下" class="headerlink" title="过滤器配置如下"></a>过滤器配置如下</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--解决中文乱码过滤器--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>encoding<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>utf-8<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>配置了以后问题依旧<br><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/2020%E5%B9%B49%E6%9C%8824%E6%97%A5104428.png"></p>
+<p>通过查阅资料，在tomcat目录下的\conf\server.xml文件找到Connector标签</p>
+<p>在后面加入URIEncoding=”UTF-8”</p>
+<p>结果问题依旧</p>
+<hr>
+<p>最后设置了VM options<br>VM options: Dfile.encoding=UTF-8<br>问题解决</p>
+<hr>
+<h2 id><a href="#" class="headerlink" title></a><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/2020%E5%B9%B49%E6%9C%8824%E6%97%A5104439.png"></h2><p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/2020%E5%B9%B49%E6%9C%8824%E6%97%A5104736.png"></p>
+]]></content>
+      <tags>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>RestController&amp;Model无法共同使用问题</title>
     <url>/2021/06/05/RestController-Model%E6%97%A0%E6%B3%95%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<h1 id="RestController-注解-ResponseBody和Model"><a href="#RestController-注解-ResponseBody和Model" class="headerlink" title="RestController 注解,ResponseBody和Model"></a>RestController 注解,ResponseBody和Model</h1><p>今天在写一个页面的时候，后端的控制器使用了RestController注解，在前端页面一直无法用thymeleaf的各种标签取出后端传给Model的值，经过大量的测试发现，如果后端使用了RestController注解，前端是无法取出值的。</p>
@@ -122,24 +140,6 @@
 <p>命令含义：<br>–zone #作用域<br>–add-port=xxxx/tcp  #添加端口，格式为：端口/通讯协议<br>–permanent  #永久生效，没有此参数重启后失效</p>
 <p>3、重启防火墙</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>]]></content>
-  </entry>
-  <entry>
-    <title>SpringMVC过滤器中文乱码</title>
-    <url>/2020/09/24/SpringMVC%E8%BF%87%E6%BB%A4%E5%99%A8%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/</url>
-    <content><![CDATA[<h1 id="今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题"><a href="#今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题" class="headerlink" title="今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题"></a>今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题</h1><h2 id="明明配置好了过滤器但是却没有生效"><a href="#明明配置好了过滤器但是却没有生效" class="headerlink" title="明明配置好了过滤器但是却没有生效"></a>明明配置好了过滤器但是却没有生效</h2><h2 id="过滤器配置如下"><a href="#过滤器配置如下" class="headerlink" title="过滤器配置如下"></a>过滤器配置如下</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--解决中文乱码过滤器--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>encoding<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>utf-8<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>配置了以后问题依旧<br><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/2020%E5%B9%B49%E6%9C%8824%E6%97%A5104428.png"></p>
-<p>通过查阅资料，在tomcat目录下的\conf\server.xml文件找到Connector标签</p>
-<p>在后面加入URIEncoding=”UTF-8”</p>
-<p>结果问题依旧</p>
-<hr>
-<p>最后设置了VM options<br>VM options: Dfile.encoding=UTF-8<br>问题解决</p>
-<hr>
-<h2 id><a href="#" class="headerlink" title></a><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/2020%E5%B9%B49%E6%9C%8824%E6%97%A5104439.png"></h2><p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/2020%E5%B9%B49%E6%9C%8824%E6%97%A5104736.png"></p>
-]]></content>
-      <tags>
-        <tag>Spring</tag>
-      </tags>
   </entry>
   <entry>
     <title>JVM笔记</title>
