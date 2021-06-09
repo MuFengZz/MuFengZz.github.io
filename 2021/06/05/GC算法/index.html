@@ -117,13 +117,13 @@
 <ul>
 <li>该算法的可用内存只有原来的一半</li>
 </ul>
-<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203833940-c0d43376-c5f5-4d6e-a78f-b9d7ef6c0424.png"></p>
+<p><img src="https://i.loli.net/2021/06/09/z9TMHwylvmoWs12.png"></p>
 <p>现在的商用Java虚拟机大多都优先采用了这种收集算法去回收新生代。</p>
 <h3 id="3-标记-整理算法"><a href="#3-标记-整理算法" class="headerlink" title="3.标记-整理算法"></a>3.标记-整理算法</h3><p>为了解决标记-复制算法的一些问题，例如对象存活率较高的时候，要进行大量的复制操作，这会导致效率降低。更关键的是，如果不希望浪费一半的内存空间，就需要有额外的空间进行分配担保，以应对被使用的内存中所有对象都存活的极端情况。所以在老年代中一般不能直接选用这种算法。</p>
 <p>针对老年代的对象存亡特征，出现了“标记-整理”（Mark-Compact）算法。</p>
 <p>标记过程和标记清除算法完全一致。</p>
 <p>后续步骤则为，让所有存活的对象都向内存空间的一端移动，然后直接清理掉边界以外的内存。</p>
-<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203853119-7ab77407-8ca0-459a-9cae-1cd158d02a1e.png"></p>
+<p><img src="https://i.loli.net/2021/06/09/Is8tpEBnf1uixMr.png"></p>
 <p>优点：</p>
 <ul>
 <li>可以彻底消灭内存碎片</li>
@@ -168,7 +168,7 @@
 
 <p>如果是引用计数算法，objA和objB均无法被回收，因为他们的引用技术器的值为1。</p>
 <h3 id="2-可达性分析算法"><a href="#2-可达性分析算法" class="headerlink" title="2.可达性分析算法"></a>2.可达性分析算法</h3><p>基本思想：通过一系列称为GC Roots的根对象作为起始节点集，从这些节点开始，根据引用关系向下搜索。搜索过程所走过的路径称为“引用链”（Reference Chain），如果某个对象到GC Roots间没有任何引用链相连， 或者用图论的话来说就是从GC Roots到这个对象不可达时，则证明此对象是不可能再被使用的。</p>
-<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203875588-0b4cd925-84a4-41e3-bc83-dd4c09cbeca7.png"></p>
+<p><img src="https://i.loli.net/2021/06/09/WwXEJUytlISqR6F.png"></p>
 <p>上图中，虽然object5和object6以及object7有关联，但是它们无法到达GC Roots，所以他们会被判定为可回收的对象。</p>
 <p>固定可作为GC Roots的对象包括以下几种：</p>
 <ul>

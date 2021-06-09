@@ -20,13 +20,13 @@
 <ul>
 <li>该算法的可用内存只有原来的一半</li>
 </ul>
-<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203833940-c0d43376-c5f5-4d6e-a78f-b9d7ef6c0424.png"></p>
+<p><img src="https://i.loli.net/2021/06/09/z9TMHwylvmoWs12.png"></p>
 <p>现在的商用Java虚拟机大多都优先采用了这种收集算法去回收新生代。</p>
 <h3 id="3-标记-整理算法"><a href="#3-标记-整理算法" class="headerlink" title="3.标记-整理算法"></a>3.标记-整理算法</h3><p>为了解决标记-复制算法的一些问题，例如对象存活率较高的时候，要进行大量的复制操作，这会导致效率降低。更关键的是，如果不希望浪费一半的内存空间，就需要有额外的空间进行分配担保，以应对被使用的内存中所有对象都存活的极端情况。所以在老年代中一般不能直接选用这种算法。</p>
 <p>针对老年代的对象存亡特征，出现了“标记-整理”（Mark-Compact）算法。</p>
 <p>标记过程和标记清除算法完全一致。</p>
 <p>后续步骤则为，让所有存活的对象都向内存空间的一端移动，然后直接清理掉边界以外的内存。</p>
-<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203853119-7ab77407-8ca0-459a-9cae-1cd158d02a1e.png"></p>
+<p><img src="https://i.loli.net/2021/06/09/Is8tpEBnf1uixMr.png"></p>
 <p>优点：</p>
 <ul>
 <li>可以彻底消灭内存碎片</li>
@@ -71,7 +71,7 @@
 
 <p>如果是引用计数算法，objA和objB均无法被回收，因为他们的引用技术器的值为1。</p>
 <h3 id="2-可达性分析算法"><a href="#2-可达性分析算法" class="headerlink" title="2.可达性分析算法"></a>2.可达性分析算法</h3><p>基本思想：通过一系列称为GC Roots的根对象作为起始节点集，从这些节点开始，根据引用关系向下搜索。搜索过程所走过的路径称为“引用链”（Reference Chain），如果某个对象到GC Roots间没有任何引用链相连， 或者用图论的话来说就是从GC Roots到这个对象不可达时，则证明此对象是不可能再被使用的。</p>
-<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203875588-0b4cd925-84a4-41e3-bc83-dd4c09cbeca7.png"></p>
+<p><img src="https://i.loli.net/2021/06/09/WwXEJUytlISqR6F.png"></p>
 <p>上图中，虽然object5和object6以及object7有关联，但是它们无法到达GC Roots，所以他们会被判定为可回收的对象。</p>
 <p>固定可作为GC Roots的对象包括以下几种：</p>
 <ul>
@@ -93,14 +93,14 @@
     <url>/2020/09/24/SpringMVC%E8%BF%87%E6%BB%A4%E5%99%A8%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/</url>
     <content><![CDATA[<h1 id="今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题"><a href="#今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题" class="headerlink" title="今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题"></a>今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题</h1><h2 id="明明配置好了过滤器但是却没有生效"><a href="#明明配置好了过滤器但是却没有生效" class="headerlink" title="明明配置好了过滤器但是却没有生效"></a>明明配置好了过滤器但是却没有生效</h2><h2 id="过滤器配置如下"><a href="#过滤器配置如下" class="headerlink" title="过滤器配置如下"></a>过滤器配置如下</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--解决中文乱码过滤器--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>encoding<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>utf-8<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>配置了以后问题依旧<br><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/2020%E5%B9%B49%E6%9C%8824%E6%97%A5104428.png"></p>
+<p>配置了以后问题依旧<br><img src="https://i.loli.net/2021/06/09/wolBmes3KM6WIQE.png"></p>
 <p>通过查阅资料，在tomcat目录下的\conf\server.xml文件找到Connector标签</p>
 <p>在后面加入URIEncoding=”UTF-8”</p>
 <p>结果问题依旧</p>
 <hr>
 <p>最后设置了VM options<br>VM options: Dfile.encoding=UTF-8<br>问题解决</p>
 <hr>
-<h2 id><a href="#" class="headerlink" title></a><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/2020%E5%B9%B49%E6%9C%8824%E6%97%A5104439.png"></h2><p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/2020%E5%B9%B49%E6%9C%8824%E6%97%A5104736.png"></p>
+<h2 id><a href="#" class="headerlink" title></a><img src="https://i.loli.net/2021/06/09/iQhD6OCF75uqcav.png"></h2><p><img src="https://i.loli.net/2021/06/09/bEiZkFHIlPUhfp5.png"></p>
 ]]></content>
       <tags>
         <tag>Spring</tag>
@@ -144,13 +144,13 @@
   <entry>
     <title>JVM笔记</title>
     <url>/2021/06/05/JVM%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<h1 id="JVM虚拟机"><a href="#JVM虚拟机" class="headerlink" title="JVM虚拟机"></a>JVM虚拟机</h1><h2 id="1-JVM的位置"><a href="#1-JVM的位置" class="headerlink" title="1.JVM的位置"></a>1.JVM的位置</h2><p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622202561470-543e4aba-a6ab-4314-a630-974d89ec02b7.png"></p>
-<h2 id="2-JVM的体系结构"><a href="#2-JVM的体系结构" class="headerlink" title="2.JVM的体系结构"></a>2.JVM的体系结构</h2><p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622202631694-15ee6faf-9453-4749-a3e2-86ce59cf15ff.png"></p>
+    <content><![CDATA[<h1 id="JVM虚拟机"><a href="#JVM虚拟机" class="headerlink" title="JVM虚拟机"></a>JVM虚拟机</h1><h2 id="1-JVM的位置"><a href="#1-JVM的位置" class="headerlink" title="1.JVM的位置"></a>1.JVM的位置</h2><p><img src="https://i.loli.net/2021/06/09/MKSOTckLZ9AfsNQ.png"></p>
+<h2 id="2-JVM的体系结构"><a href="#2-JVM的体系结构" class="headerlink" title="2.JVM的体系结构"></a>2.JVM的体系结构</h2><p><img src="https://i.loli.net/2021/06/09/ML2nUS49xZ1cioE.png"></p>
 <p>上图中，Java栈，本地方法栈，程序计数器，均不会有垃圾回收</p>
 <p>JVM架构图</p>
-<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/image-20210605192109376.png"></p>
+<p><img src="https://i.loli.net/2021/06/09/K2ygZFrVcEHR49I.png"></p>
 <h2 id="3-类加载器"><a href="#3-类加载器" class="headerlink" title="3.类加载器"></a>3.类加载器</h2><p>​    作用：加载Class文件</p>
-<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622202950142-d4c8d89c-a552-47be-be4c-2f641157d2fe.png"></p>
+<p><img src="https://i.loli.net/2021/06/09/A5eKoLfQyjnYP21.png"></p>
 <p>JVM中提供了三层的ClassLoader：</p>
 <ul>
 <li>Bootstrap classLoader:主要负责加载核心的类库(java.lang.*等)，构造ExtClassLoader和APPClassLoader。</li>
@@ -159,7 +159,7 @@
 </ul>
 <h2 id="4-双亲委派机制"><a href="#4-双亲委派机制" class="headerlink" title="4.双亲委派机制"></a>4.双亲委派机制</h2><p>​    为了保证安全。</p>
 <p>​    APP–&gt;EXT（扩展）–&gt;Bootstrap(最终执行) 会一直向上找，如果高层找不到在由最高层向下找。</p>
-<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203082627-55e834a9-03cb-40d6-b31b-9135229e0e42.png"></p>
+<p><img src="https://i.loli.net/2021/06/09/kvoHOZRlJExf6yK.png"></p>
 <p>流程：</p>
 <ol>
 <li>类加载器收到类加载的请求</li>
@@ -170,13 +170,13 @@
 <h2 id="5-沙箱安全机制"><a href="#5-沙箱安全机制" class="headerlink" title="5.沙箱安全机制"></a>5.沙箱安全机制</h2><p>Java安全模型的核心就是Java沙箱(sandbσx),什么是沙箱?沙箱是一个限制程序运行的环境。沙箱机制就是将Java代码限定在虛拟杋(Jνm特定的运行范围中,并且严格限制代码对本地系统资源访问,通过这样的措施来保证对代码的有效隔离,防止对本地系统造成破坏。沙箱主要限制系统资源访问,那系统资源包括什么?CP∪、内存、文件系统、网络。不同级别的沙箱对这些资源访问的限制也可以不一样。</p>
 <p>所有的Java程序运行都可以指定沙箱,可以定制安全策略。</p>
 <p>Java中将执行程序分成本地代码和远程代码两种,本地代码默认视为可信仼的,而远程代码则被看作是不受信的。对于授信的本地代码,可以访问一切本地资源。而对于非授信的远程代码在早期的ava实现中,安全依赖于沙箱( Sandbox)机制。如下图所示JDK1.0安全模型。</p>
-<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203112851-63b53b6b-a57e-4a37-aae4-336e56024648.png"></p>
+<p><img src="https://i.loli.net/2021/06/09/DlVMqOFLwjSYtxT.png"></p>
 <p>但如此严格的安全机制也给程序的功能扩展带来障碍，比如当用户希望远程代码访问本地系统的文件时候，就无法实现。因此在后续的Java 1.1版本中， 针对安全机制做了改进， 增加了安全策略， 允许用户指定代码对本地资源的访问权限。如下图所示JDK 1.1安全模型。</p>
-<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203127799-4adc8743-a108-4429-8622-a4e66cf7184e.png"></p>
+<p><img src="https://i.loli.net/2021/06/09/eGxbOuMc7LXKJ4Q.png"></p>
 <p>在Java 1.2版本中， 再次改进了安全机制， 增加了代码签名。不论本地代码或是远程代码， 都会按照用户的安全策略设定，由类加载器加载到虚拟机中权限不同的运行空间，来实现差异化的代码执行权限控制。如下图所示JDK 1.2安全模型。</p>
-<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203139157-0d3a1cfa-6f23-4c7a-bb8b-1f725cb8a50f.png"></p>
+<p><img src="https://i.loli.net/2021/06/09/yfqXP6QO3Wi2xIY.png"></p>
 <p>当前最新的安全机制实现， 则引入了域(Domain) 的概念。虚拟机会把所有代码加载到不同的系统域和应用域，系统域部分专门负责与关键资源进行交互，而各个应用域部分则通过系统域的部分代理来对各种需要的资源进行访问。虚拟机中不同的受保护域(Protected Domain) ， 对应不一样的权限(Permission) 。存在于不同域中的类文件就具有了当前域的全部权限， 如下图所示最新的安全模型(jdk 1.6)。</p>
-<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203148746-9135d0eb-234b-483e-a9c8-49c5aabaa18a.png"></p>
+<p><img src="https://i.loli.net/2021/06/09/e7C4LoYypuH1PvQ.png"></p>
 <p>组成沙箱的基本组件：</p>
 <p>·字节码校验器(bytecode verifier) ：确保Java类文件遵循Java语言规范。这样可以帮助Java程序实现内存保护。“但并不是所有的类文件都会经过字节码校验，比如核心类。</p>
 <p>·类装载器(classloader) ：其中类装载器在3个方面对Java沙箱起作用</p>
@@ -235,10 +235,10 @@
 <li>实例方法</li>
 </ul>
 <p>栈运行原理：栈帧</p>
-<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203208262-a6fbacc8-9dea-4f0c-8f6c-14c6b85d5885.png"></p>
+<p><img src="https://i.loli.net/2021/06/09/9fVtrKWiCYA5Uwu.png"></p>
 <p>程序正在执行的方法，一定在栈的顶部</p>
 <p>如果栈满:StackOverflowError</p>
-<h3 id="栈-堆-方法区：交互关系"><a href="#栈-堆-方法区：交互关系" class="headerlink" title="栈+堆+方法区：交互关系"></a>栈+堆+方法区：交互关系</h3><p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203213663-54e342e4-c6b3-4359-9a2d-8ba949a4dbe7.png"></p>
+<h3 id="栈-堆-方法区：交互关系"><a href="#栈-堆-方法区：交互关系" class="headerlink" title="栈+堆+方法区：交互关系"></a>栈+堆+方法区：交互关系</h3><p><img src="https://i.loli.net/2021/06/09/EBLvNlbF9WQZkgj.png"></p>
 <p>Q1:画出一个对象实例化的过程在内存中？</p>
 <p>Q2:栈具体怎么存？</p>
 <h2 id="10-三种JVM"><a href="#10-三种JVM" class="headerlink" title="10.三种JVM"></a>10.三种JVM</h2><ul>
@@ -277,7 +277,7 @@
 
 
 <p>JDK8后，永久存储区改名为——元空间，有区别！</p>
-<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203223214-67805636-9d97-42ff-9aa4-b296fc5c2b1a.png"></p>
+<p><img src="https://i.loli.net/2021/06/09/GTOuacqbftgUA54.png"></p>
 <h2 id="12-新生区"><a href="#12-新生区" class="headerlink" title="12.新生区"></a>12.新生区</h2><ul>
 <li>类：诞生和成长的地方，甚至死亡；</li>
 <li>伊甸园区:所有的对象都在此区域new出来。</li>
@@ -309,7 +309,7 @@
 <li>JDK1.7    : 永久代，但是慢慢的退化了，<code>去永久代</code> ，常量池在堆中</li>
 <li>JDK1.8    : 无永久代，常量池在元空间  – 元空间出现在JDK1.8</li>
 </ul>
-<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203241157-d40f70e9-976f-4969-a094-c4eb514f781d.png"></p>
+<p><img src="https://i.loli.net/2021/06/09/EAaYS1JR3G7UOjF.png"></p>
 <p>元空间：逻辑上存在，物理上不存在</p>
 <p>原因：新生代+老年代 = total mem</p>
 <h2 id="15-堆内存调优"><a href="#15-堆内存调优" class="headerlink" title="15.堆内存调优"></a>15.堆内存调优</h2><p>默认情况下，分配的总内存时电脑内存的1/4,初始化的内存是1/64</p>
@@ -327,7 +327,7 @@
 
 
 
-<h2 id="16-GC-垃圾回收"><a href="#16-GC-垃圾回收" class="headerlink" title="16.GC:垃圾回收"></a>16.GC:垃圾回收</h2><p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203250047-59afdacb-eb8a-4a9a-8786-43889bcedb25.png"></p>
+<h2 id="16-GC-垃圾回收"><a href="#16-GC-垃圾回收" class="headerlink" title="16.GC:垃圾回收"></a>16.GC:垃圾回收</h2><p><img src="https://i.loli.net/2021/06/09/NUwI8MEv5ROYKDH.png"></p>
 <ul>
 <li>新生代</li>
 <li>幸存区(from/to)</li>
@@ -352,7 +352,7 @@
 <h2 id="17-JMM（Java-Memory-Model）"><a href="#17-JMM（Java-Memory-Model）" class="headerlink" title="17.JMM（Java Memory Model）"></a>17.JMM（Java Memory Model）</h2><p>JMM:允许编译器和缓存以数据在处理器特定的缓存（或寄存器）和主存之间移动的次序拥有重要的特权，除非代码中使用了volatile或synchronized明确请求了某些可见性的保证。</p>
 <p>作用：缓存一致性协议，用于定义数据读写的规则</p>
 <p>JMM定义了线程工作内存和主内存之间的抽象关系：线程之间的共享变量存储在主内存中，每个线程都有一个私有的本地内存</p>
-<p><img src="https://raw.githubusercontent.com/ShengQiong/ImageBed/main/img/1622203258666-7466975c-50ea-43f9-9f8e-269e9dcf037f.png"></p>
+<p><img src="https://i.loli.net/2021/06/09/GM8BYhArkQpVtTR.png"></p>
 <p>解决共享对象可见性：volilate,synchronized</p>
 <p>2.关于JMM的一些同步的约定：</p>
 <p>1、线程解锁前，必须把共享变量立刻刷回主存。</p>
