@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    CentOS开放端口 |  沐风的博客
+    Archives: 2020/9 |  沐风的博客
   </title>
   <meta name="generator" content="hexo-theme-ayer">
   
@@ -49,165 +49,51 @@
       
     <main class="content on">
       <section class="outer">
-  <article
-  id="post-CentOS开放端口/index"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
+  
+  <article class="articles">
     
-    <header class="article-header">
+    
+    <h1 class="page-type-title">2020/9</h1>
+    
+    
+  
+  
+  
+  
+  
+  
+  <div class="archives-wrap">
+    <div class="archive-year-wrap">
+      <a href="/archives/2020" class="archive-year">2020</a>
+    </div>
+    <div class="archives">
+      
+      <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2020/09/24/SpringMVC%E8%BF%87%E6%BB%A4%E5%99%A8%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/" class="archive-article-date">
+  <time datetime="2020-09-24T03:02:04.000Z" itemprop="datePublished">09/24</time>
+</a>
        
-<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  CentOS开放端口
-</h1>
+<h2 itemprop="name">
+  <a class="archive-article-title" href="/2020/09/24/SpringMVC%E8%BF%87%E6%BB%A4%E5%99%A8%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/"
+    >SpringMVC过滤器中文乱码</a> 
+</h2>
  
 
     </header>
-     
-    <div class="article-meta">
-      <a href="/2020/10/17/CentOS%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3/index/" class="article-date">
-  <time datetime="2020-10-17T06:02:46.000Z" itemprop="datePublished">2020-10-17</time>
-</a>   
-<div class="word_count">
-    <span class="post-time">
-        <span class="post-meta-item-icon">
-            <i class="ri-quill-pen-line"></i>
-            <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">239</span>
-        </span>
-    </span>
-
-    <span class="post-time">
-        &nbsp; | &nbsp;
-        <span class="post-meta-item-icon">
-            <i class="ri-book-open-line"></i>
-            <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">1 min</span>
-        </span>
-    </span>
-</div>
- 
-    </div>
-      
-    <div class="tocbot"></div>
-
-
-
-
-  
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="本地服务器（基于VMware-CentOS-7）部署常用软件时遇到的问题"><a href="#本地服务器（基于VMware-CentOS-7）部署常用软件时遇到的问题" class="headerlink" title="本地服务器（基于VMware + CentOS 7）部署常用软件时遇到的问题"></a>本地服务器（基于VMware + CentOS 7）部署常用软件时遇到的问题</h1><p>看完了CodeSheep的<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1bA411b7vs">建议人手一套：个人专属多节点Linux环境打造，Linux操作系统学习实验环境安装配置视频教程</a>，突然也想打造一套多节点的本地服务器。但是前几天安装软件的时候，遇到了如下问题：</p>
-<p>例如：MySQL无法远程连接，redis无法远程访问等等这些问题</p>
-<p>刚开始以为是软件安装的问题，后来经过查阅资料，发现是端口未开放。</p>
-<p>通过以下命令解决</p>
-<p>1、开启防火墙 </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start firewalld</span><br></pre></td></tr></table></figure>
-
-<p>2、开放指定端口(以8080端口为例)</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=8080/tcp --permanent</span><br></pre></td></tr></table></figure>
-
-<p>命令含义：<br>–zone #作用域<br>–add-port=xxxx/tcp  #添加端口，格式为：端口/通讯协议<br>–permanent  #永久生效，没有此参数重启后失效</p>
-<p>3、重启防火墙</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure> 
-      <!-- reward -->
-      
-    </div>
     
-
-    <!-- copyright -->
     
-    <div class="declare">
-      <ul class="post-copyright">
-        <li>
-          <i class="ri-copyright-line"></i>
-          <strong>Copyright： </strong>
-          
-          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
-          
-        </li>
-      </ul>
-    </div>
-    
-    <footer class="article-footer">
-       
-<div class="share-btn">
-      <span class="share-sns share-outer">
-        <i class="ri-share-forward-line"></i>
-        分享
-      </span>
-      <div class="share-wrap">
-        <i class="arrow"></i>
-        <div class="share-icons">
-          
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="ri-weibo-fill"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="ri-wechat-fill"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="ri-qq-fill"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="ri-douban-line"></i>
-          </a>
-          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a> -->
-          
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="ri-facebook-circle-fill"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="ri-twitter-fill"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="ri-google-fill"></i>
-          </a>
-        </div>
-      </div>
-</div>
-
-<div class="wx-share-modal">
-    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://gitee.com/mufengzzz/mufengzzz/2020/10/17/CentOS%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3/index/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div id="share-mask"></div>  
-    </footer>
   </div>
-
-   
-  <nav class="article-nav">
-    
-      <a href="/2021/06/05/GC%E7%AE%97%E6%B3%95/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            GC算法
-          
-        </div>
-      </a>
-    
-    
-      <a href="/2020/09/24/SpringMVC%E8%BF%87%E6%BB%A4%E5%99%A8%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/" class="article-nav-link">
-        <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">SpringMVC过滤器中文乱码</div>
-      </a>
-    
-  </nav>
+</article>
+      
+      
+    </div>
+  </div>
+  
+  
 
   
-     
-</article>
-
 </section>
       <footer class="footer">
   <div class="outer">
@@ -347,23 +233,6 @@
 <script src="/js/lazyload.min.js"></script>
 
 <!-- Tocbot -->
-
-
-<script src="/js/tocbot.min.js"></script>
-
-<script>
-  tocbot.init({
-    tocSelector: '.tocbot',
-    contentSelector: '.article-entry',
-    headingSelector: 'h1, h2, h3, h4, h5, h6',
-    hasInnerContainers: true,
-    scrollSmooth: true,
-    scrollContainer: 'main',
-    positionFixedSelector: '.tocbot',
-    positionFixedClass: 'is-position-fixed',
-    fixedSidebarOffset: 'auto'
-  });
-</script>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">

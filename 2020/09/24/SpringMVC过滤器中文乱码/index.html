@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    CentOS开放端口 |  沐风的博客
+    SpringMVC过滤器中文乱码 |  沐风的博客
   </title>
   <meta name="generator" content="hexo-theme-ayer">
   
@@ -50,7 +50,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-CentOS开放端口/index"
+  id="post-SpringMVC过滤器中文乱码"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -61,22 +61,22 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  CentOS开放端口
+  SpringMVC过滤器中文乱码
 </h1>
  
 
     </header>
      
     <div class="article-meta">
-      <a href="/2020/10/17/CentOS%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3/index/" class="article-date">
-  <time datetime="2020-10-17T06:02:46.000Z" itemprop="datePublished">2020-10-17</time>
+      <a href="/2020/09/24/SpringMVC%E8%BF%87%E6%BB%A4%E5%99%A8%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/" class="article-date">
+  <time datetime="2020-09-24T03:02:04.000Z" itemprop="datePublished">2020-09-24</time>
 </a>   
 <div class="word_count">
     <span class="post-time">
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">239</span>
+            <span class="post-count">202</span>
         </span>
     </span>
 
@@ -100,19 +100,20 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="本地服务器（基于VMware-CentOS-7）部署常用软件时遇到的问题"><a href="#本地服务器（基于VMware-CentOS-7）部署常用软件时遇到的问题" class="headerlink" title="本地服务器（基于VMware + CentOS 7）部署常用软件时遇到的问题"></a>本地服务器（基于VMware + CentOS 7）部署常用软件时遇到的问题</h1><p>看完了CodeSheep的<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1bA411b7vs">建议人手一套：个人专属多节点Linux环境打造，Linux操作系统学习实验环境安装配置视频教程</a>，突然也想打造一套多节点的本地服务器。但是前几天安装软件的时候，遇到了如下问题：</p>
-<p>例如：MySQL无法远程连接，redis无法远程访问等等这些问题</p>
-<p>刚开始以为是软件安装的问题，后来经过查阅资料，发现是端口未开放。</p>
-<p>通过以下命令解决</p>
-<p>1、开启防火墙 </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start firewalld</span><br></pre></td></tr></table></figure>
+  <h2 id="今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题"><a href="#今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题" class="headerlink" title="今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题"></a>今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题</h2><p>配置好了过滤器，但是控制台依旧输出乱码</p>
+<p>过滤器配置如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--解决中文乱码过滤器--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>encoding<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>utf-8<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>2、开放指定端口(以8080端口为例)</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=8080/tcp --permanent</span><br></pre></td></tr></table></figure>
+<p>配置了以后问题依旧<br><img src="https://i.loli.net/2021/06/09/wolBmes3KM6WIQE.png"></p>
+<p>通过查阅资料，在tomcat目录下的\conf\server.xml文件找到Connector标签</p>
+<p>在后面加入URIEncoding=”UTF-8”</p>
+<p>结果问题依旧</p>
+<hr>
+<p>最后设置了VM options<br>VM options: </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Dfile.encoding=UTF-8</span><br></pre></td></tr></table></figure>
 
-<p>命令含义：<br>–zone #作用域<br>–add-port=xxxx/tcp  #添加端口，格式为：端口/通讯协议<br>–permanent  #永久生效，没有此参数重启后失效</p>
-<p>3、重启防火墙</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure> 
+<h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><h2 id><a href="#" class="headerlink" title></a><img src="https://i.loli.net/2021/06/09/iQhD6OCF75uqcav.png"></h2><p><img src="https://i.loli.net/2021/06/09/bEiZkFHIlPUhfp5.png"></p>
+ 
       <!-- reward -->
       
     </div>
@@ -176,31 +177,28 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://gitee.com/mufengzzz/mufengzzz/2020/10/17/CentOS%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3/index/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://gitee.com/mufengzzz/mufengzzz/2020/09/24/SpringMVC%E8%BF%87%E6%BB%A4%E5%99%A8%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li></ul>
+
     </footer>
   </div>
 
    
   <nav class="article-nav">
     
-      <a href="/2021/06/05/GC%E7%AE%97%E6%B3%95/" class="article-nav-link">
+      <a href="/2020/10/17/CentOS%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3/index/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            GC算法
+            CentOS开放端口
           
         </div>
       </a>
     
-    
-      <a href="/2020/09/24/SpringMVC%E8%BF%87%E6%BB%A4%E5%99%A8%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/" class="article-nav-link">
-        <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">SpringMVC过滤器中文乱码</div>
-      </a>
     
   </nav>
 
