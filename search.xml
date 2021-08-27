@@ -223,27 +223,6 @@
       </tags>
   </entry>
   <entry>
-    <title>SpringMVC过滤器中文乱码</title>
-    <url>/2020/09/24/SpringMVC%E8%BF%87%E6%BB%A4%E5%99%A8%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/</url>
-    <content><![CDATA[<h2 id="今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题"><a href="#今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题" class="headerlink" title="今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题"></a>今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题</h2><p>配置好了过滤器，但是控制台依旧输出乱码</p>
-<p>过滤器配置如下：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--解决中文乱码过滤器--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>encoding<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>utf-8<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>配置了以后问题依旧<br><img src="https://i.loli.net/2021/06/09/wolBmes3KM6WIQE.png"></p>
-<p>通过查阅资料，在tomcat目录下的\conf\server.xml文件找到Connector标签</p>
-<p>在后面加入URIEncoding=”UTF-8”</p>
-<p>结果问题依旧</p>
-<hr>
-<p>最后设置了VM options<br>VM options: </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">-Dfile.encoding=UTF-8</span><br></pre></td></tr></table></figure>
-
-<h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><h2 id><a href="#" class="headerlink" title></a><img src="https://i.loli.net/2021/06/09/iQhD6OCF75uqcav.png"></h2><p><img src="https://i.loli.net/2021/06/09/bEiZkFHIlPUhfp5.png"></p>
-]]></content>
-      <tags>
-        <tag>Spring</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>CentOS开放端口</title>
     <url>/2020/10/17/CentOS%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3/index/</url>
     <content><![CDATA[<h1 id="本地服务器（基于VMware-CentOS-7）部署常用软件时遇到的问题"><a href="#本地服务器（基于VMware-CentOS-7）部署常用软件时遇到的问题" class="headerlink" title="本地服务器（基于VMware + CentOS 7）部署常用软件时遇到的问题"></a>本地服务器（基于VMware + CentOS 7）部署常用软件时遇到的问题</h1><p>看完了CodeSheep的<a href="https://www.bilibili.com/video/BV1bA411b7vs">建议人手一套：个人专属多节点Linux环境打造，Linux操作系统学习实验环境安装配置视频教程</a>，突然也想打造一套多节点的本地服务器。但是前几天安装软件的时候，遇到了如下问题：</p>
