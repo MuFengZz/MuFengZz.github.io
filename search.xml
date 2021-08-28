@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>GC算法</title>
-    <url>/MuFengZz/2021/06/05/GC%E7%AE%97%E6%B3%95/</url>
+    <url>/2021/06/05/GC%E7%AE%97%E6%B3%95/</url>
     <content><![CDATA[<h1 id="JVM的几种GC算法"><a href="#JVM的几种GC算法" class="headerlink" title="JVM的几种GC算法"></a>JVM的几种GC算法</h1><h3 id="1-标记-清除算法"><a href="#1-标记-清除算法" class="headerlink" title="1.标记-清除算法"></a>1.标记-清除算法</h3><p>首先标记处所有需要回收的对象，在标记完成后，统一回收掉所有被标记的对象。当然，也可以反过来，只标记存活的对象，统一回收未标记的对象。</p>
 <p>缺点：</p>
 <ul>
@@ -90,7 +90,7 @@
   </entry>
   <entry>
     <title>HashMap分析</title>
-    <url>/MuFengZz/2021/06/14/HashMap%E5%88%86%E6%9E%90/</url>
+    <url>/2021/06/14/HashMap%E5%88%86%E6%9E%90/</url>
     <content><![CDATA[<h1 id="HashMap底层原理实现"><a href="#HashMap底层原理实现" class="headerlink" title="HashMap底层原理实现"></a>HashMap底层原理实现</h1><p>首先，我们要了解Java集合框架的基本结构图</p>
 <p><img src="https://i.loli.net/2021/06/14/WvB4LAOEN9qQSgG.png"></p>
 <p>然后我们进入HashMap源码</p>
@@ -143,26 +143,8 @@
       </tags>
   </entry>
   <entry>
-    <title>RestController&amp;Model无法共同使用问题</title>
-    <url>/MuFengZz/2021/06/05/RestController-Model%E6%97%A0%E6%B3%95%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<h1 id="RestController-注解-ResponseBody和Model"><a href="#RestController-注解-ResponseBody和Model" class="headerlink" title="RestController 注解,ResponseBody和Model"></a>RestController 注解,ResponseBody和Model</h1><p>今天在写一个页面的时候，后端的控制器使用了RestController注解，在前端页面一直无法用thymeleaf的各种标签取出后端传给Model的值，经过大量的测试发现，如果后端使用了RestController注解，前端是无法取出值的。</p>
-<p>同样的,使用ResponseBody注解也会出现这种问题。</p>
-<p>因为RestController注解是一个组合注解，包含了</p>
-<p>使用RestController注解，Model、ModelMap不能解析视图到页面，只能使用ModelAndView。因为当我们使用RestController时，默认每个方法都添加了ResponseBody注解，导致方法返回Model、ModelMap时，不能解析视图到页面，只能返回字符串。</p>
-<blockquote>
-<p>解决方案</p>
-</blockquote>
-<p>而ModelAndView能指定返回到的视图页面，所以使用RestController注解，就能解析视图页面</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/modelAndView&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ModelAndView <span class="title">modelAndView</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//构建ModelAndView实例，并设置跳转地址(页面)为hello</span></span><br><span class="line">        ModelAndView view = <span class="keyword">new</span> ModelAndView(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">        <span class="comment">//将数据放置到ModelAndView对象view中,第二个参数可以是任何java类型</span></span><br><span class="line">        view.addObject(<span class="string">&quot;name&quot;</span>,name);</span><br><span class="line">        <span class="comment">//返回ModelAndView对象view</span></span><br><span class="line">        <span class="keyword">return</span> view;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <tags>
-        <tag>Spring</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Java中的锁机制</title>
-    <url>/MuFengZz/2021/06/15/Java%E4%B8%AD%E7%9A%84%E9%94%81%E6%9C%BA%E5%88%B6/</url>
+    <url>/2021/06/15/Java%E4%B8%AD%E7%9A%84%E9%94%81%E6%9C%BA%E5%88%B6/</url>
     <content><![CDATA[<h3 id="1-什么是锁？"><a href="#1-什么是锁？" class="headerlink" title="1.什么是锁？"></a>1.什么是锁？</h3><p>在并发环境下，多个线程将会竞争同一个资源，这可能会导致数据不一致的问题。为了解决这种问题，引入了一种锁的机制。通过锁，来对资源进行锁定，保证了在某一时间点，资源只能被某一个线程访问，从而保证数据一致性。</p>
 <p>在Java中，每个对象都拥有一把锁，这把锁存放于对象头中。锁中记录了当前对象被哪个线程所占用。对象、对象头结构如下图所示。（对象头被设计的极小(32/64bit)）</p>
 <p><img src="https://i.loli.net/2021/06/15/Ch9tLKOuylEW6Ps.png"></p>
@@ -224,7 +206,7 @@
   </entry>
   <entry>
     <title>SpringMVC过滤器中文乱码</title>
-    <url>/MuFengZz/2020/09/24/SpringMVC%E8%BF%87%E6%BB%A4%E5%99%A8%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/</url>
+    <url>/2020/09/24/SpringMVC%E8%BF%87%E6%BB%A4%E5%99%A8%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/</url>
     <content><![CDATA[<h2 id="今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题"><a href="#今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题" class="headerlink" title="今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题"></a>今天在学习SpringMVC的中文乱码过滤器的时候遇到了如下问题</h2><p>配置好了过滤器，但是控制台依旧输出乱码</p>
 <p>过滤器配置如下：</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--解决中文乱码过滤器--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>encoding<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>utf-8<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -244,8 +226,26 @@
       </tags>
   </entry>
   <entry>
+    <title>RestController&amp;Model无法共同使用问题</title>
+    <url>/2021/06/05/RestController-Model%E6%97%A0%E6%B3%95%E5%85%B1%E5%90%8C%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h1 id="RestController-注解-ResponseBody和Model"><a href="#RestController-注解-ResponseBody和Model" class="headerlink" title="RestController 注解,ResponseBody和Model"></a>RestController 注解,ResponseBody和Model</h1><p>今天在写一个页面的时候，后端的控制器使用了RestController注解，在前端页面一直无法用thymeleaf的各种标签取出后端传给Model的值，经过大量的测试发现，如果后端使用了RestController注解，前端是无法取出值的。</p>
+<p>同样的,使用ResponseBody注解也会出现这种问题。</p>
+<p>因为RestController注解是一个组合注解，包含了</p>
+<p>使用RestController注解，Model、ModelMap不能解析视图到页面，只能使用ModelAndView。因为当我们使用RestController时，默认每个方法都添加了ResponseBody注解，导致方法返回Model、ModelMap时，不能解析视图到页面，只能返回字符串。</p>
+<blockquote>
+<p>解决方案</p>
+</blockquote>
+<p>而ModelAndView能指定返回到的视图页面，所以使用RestController注解，就能解析视图页面</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/modelAndView&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ModelAndView <span class="title">modelAndView</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//构建ModelAndView实例，并设置跳转地址(页面)为hello</span></span><br><span class="line">        ModelAndView view = <span class="keyword">new</span> ModelAndView(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">        <span class="comment">//将数据放置到ModelAndView对象view中,第二个参数可以是任何java类型</span></span><br><span class="line">        view.addObject(<span class="string">&quot;name&quot;</span>,name);</span><br><span class="line">        <span class="comment">//返回ModelAndView对象view</span></span><br><span class="line">        <span class="keyword">return</span> view;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CentOS开放端口</title>
-    <url>/MuFengZz/2020/10/17/CentOS%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3/index/</url>
+    <url>/2020/10/17/CentOS%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3/index/</url>
     <content><![CDATA[<h1 id="本地服务器（基于VMware-CentOS-7）部署常用软件时遇到的问题"><a href="#本地服务器（基于VMware-CentOS-7）部署常用软件时遇到的问题" class="headerlink" title="本地服务器（基于VMware + CentOS 7）部署常用软件时遇到的问题"></a>本地服务器（基于VMware + CentOS 7）部署常用软件时遇到的问题</h1><p>看完了CodeSheep的<a href="https://www.bilibili.com/video/BV1bA411b7vs">建议人手一套：个人专属多节点Linux环境打造，Linux操作系统学习实验环境安装配置视频教程</a>，突然也想打造一套多节点的本地服务器。但是前几天安装软件的时候，遇到了如下问题：</p>
 <p>例如：MySQL无法远程连接，redis无法远程访问等等这些问题</p>
 <p>刚开始以为是软件安装的问题，后来经过查阅资料，发现是端口未开放。</p>
@@ -262,7 +262,7 @@
   </entry>
   <entry>
     <title>JVM笔记</title>
-    <url>/MuFengZz/2021/06/05/JVM%E7%AC%94%E8%AE%B0/</url>
+    <url>/2021/06/05/JVM%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<h1 id="JVM虚拟机"><a href="#JVM虚拟机" class="headerlink" title="JVM虚拟机"></a>JVM虚拟机</h1><h2 id="1-JVM的位置"><a href="#1-JVM的位置" class="headerlink" title="1.JVM的位置"></a>1.JVM的位置</h2><p><img src="https://i.loli.net/2021/06/09/MKSOTckLZ9AfsNQ.png"></p>
 <h2 id="2-JVM的体系结构"><a href="#2-JVM的体系结构" class="headerlink" title="2.JVM的体系结构"></a>2.JVM的体系结构</h2><p><img src="https://i.loli.net/2021/06/09/ML2nUS49xZ1cioE.png"></p>
 <p>上图中，Java栈，本地方法栈，程序计数器，均不会有垃圾回收</p>
